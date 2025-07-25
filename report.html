@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Campaign Report - NGOConnect</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    .report-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+    }
+    .report-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .report-status {
+      display: inline-block;
+      background: #faffb8;
+      color: #222;
+      font-weight: 600;
+      border-radius: 1rem;
+      padding: 0.4rem 1.2rem;
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+    }
+    .edit-btn {
+      background: #111;
+      color: #fff;
+      border: none;
+      border-radius: 0.7rem;
+      padding: 0.6rem 1.5rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-left: 1rem;
+    }
+    .report-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+    .report-card, .report-chart {
+      background: #6b7280;
+      color: #fff;
+      border-radius: 1rem;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+    .report-card .desc {
+      font-size: 1rem;
+      margin-bottom: 1.2rem;
+      color: #f3f4f6;
+    }
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: #d1d5db;
+      border-radius: 4px;
+      margin: 1rem 0 0.5rem 0;
+      position: relative;
+    }
+    .progress-bar-inner {
+      height: 100%;
+      background: #faffb8;
+      border-radius: 4px;
+      width: 60%;
+    }
+    .report-card .stats {
+      display: flex;
+      justify-content: space-between;
+      font-size: 1.2rem;
+      margin-top: 0.5rem;
+    }
+    .qr-code {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      background: #fff;
+      padding: 0.5rem;
+      border-radius: 0.5rem;
+    }
+    .report-chart {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+      width: 100%;
+      max-width: 260px;
+      height: 260px;
+      margin: 0 auto;
+    }
+    .report-chart canvas {
+      width: 100%;
+      height: 100%;
+    }
+    .report-chart .big {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin: 0.5rem 0;
+    }
+    .report-chart .label {
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+    }
+    .report-image {
+      width: 100%;
+      border-radius: 1rem;
+      margin-bottom: 2rem;
+      object-fit: cover;
+      max-height: 220px;
+    }
+    .report-card {
+      background: #5a5a5a;
+      color: #fff;
+      border-radius: 1rem;
+      padding: 1.5rem 1rem 1rem 1rem;
+      width: 100%;
+      max-width: 320px;
+      min-height: 260px;
+      margin: 0 auto;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: stretch;
+    }
+    .report-card-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+    }
+    .report-card-main {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    .report-card-main .big {
+      font-size: 3rem;
+      font-weight: bold;
+    }
+    .report-card-main .label {
+      font-size: 1rem;
+    }
+    .report-card canvas {
+      width: 100% !important;
+      height: 120px !important;
+      display: block;
+      margin: 0 auto;
+      background: transparent;
+    }
+    @media (max-width: 900px) {
+      .report-grid {
+        grid-template-columns: 1fr;
+      }
+      .qr-code {
+        position: static;
+        margin: 1rem auto 0 auto;
+        display: block;
+      }
+    }
+    @media (max-width: 600px) {
+      .report-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+      }
+      .report-title {
+        font-size: 2rem;
+      }
+      .report-card, .report-chart {
+        padding: 1rem;
+      }
+      .report-image {
+        max-height: 140px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <i class="fas fa-hands-helping"></i>
+        <span>NGOConnect</span>
+      </div>
+      <ul class="nav-menu">
+        <li><a href="index.html" class="nav-link">Dashboard</a></li>
+        <li><a href="donations.html" class="nav-link">Donations</a></li>
+        <li><a href="volunteers.html" class="nav-link">Volunteer Management</a></li>
+        <li><a href="report.html" class="nav-link">Reports</a></li>
+      </ul>
+      <span id="userProfileArea">
+        <a href="login.html" style="text-decoration:none;">
+          <button class="btn-primary" style="padding:0.5rem 1.5rem;border-radius:6px;border:2px solid #4F46E5;background:#4F46E5;color:#fff;font-weight:600;cursor:pointer;transition:all 0.2s;">Get Started</button>
+        </a>
+      </span>
+    </div>
+  </nav>
+
+  <main class="main-content">
+    <div class="report-header">
+      <div>
+        <div class="report-title">@first Campaign</div>
+        <span class="report-status">Ongoing</span>
+      </div>
+      <button class="edit-btn">Edit</button>
+    </div>
+    <div class="report-grid">
+      <div>
+        <div class="report-card">
+          <div class="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim.</div>
+          <div class="stats">
+            <div>Goal<br><b>$2.4M</b></div>
+            <div>6 months</div>
+            <div>Received<br><b>$1.4M</b></div>
+          </div>
+          <div class="progress-bar"><div class="progress-bar-inner"></div></div>
+        </div>
+        <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80" alt="Campaign" class="report-image">
+      </div>
+      <div>
+        <div class="qr-code">
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=https://ngoconnect.org/campaign/first" alt="QR Code">
+        </div>
+        <div class="report-card">
+          <div class="report-card-header">
+            <div>Leorms</div>
+            <div>6Months</div>
+            <div>$1.4M</div>
+          </div>
+          <div class="report-card-main">
+            <div class="big">350%</div>
+            <div class="label">Donation a month increased</div>
+          </div>
+          <canvas id="barChart" width="280" height="120"></canvas>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h4>NGOConnect</h4>
+        <p>Empowering NGOs to create positive change through collaboration and efficient management.</p>
+        <div class="social-links">
+          <a href="#"><i class="fab fa-facebook"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-linkedin"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+      <div class="footer-section">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Our Projects</a></li>
+          <li><a href="#">Get Involved</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="#">Help Center</a></li>
+          <li><a href="#">Documentation</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Support</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>Newsletter</h4>
+        <p>Stay updated with our latest news and updates.</p>
+        <div class="newsletter-form">
+          <input type="email" placeholder="Enter your email">
+          <button type="submit">Subscribe</button>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2024 NGOConnect. All rights reserved.</p>
+    </div>
+  </footer>
+  <script>
+    // Navigation active state
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', function() {
+        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+    // Bar Chart
+    new Chart(document.getElementById('barChart').getContext('2d'), {
+      type: 'bar',
+      data: {
+        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+        datasets: [{
+          label: 'Donations',
+          data: [12, 19, 13, 15, 22, 30, 28, 25, 20, 18, 24, 27],
+          backgroundColor: '#fff',
+          borderRadius: 6
+        }]
+      },
+      options: {
+        responsive: false,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+          y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#fff' } },
+          x: { grid: { display: false }, ticks: { color: '#fff' } }
+        }
+      }
+    });
+  </script>
+  
+  <script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+  
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyAGIY6ZrkTWUhq9sgu3ZHLxhaHRLhoCAfc",
+    authDomain: "ngoconnect-86fb7.firebaseapp.com",
+    projectId: "ngoconnect-86fb7",
+    storageBucket: "ngoconnect-86fb7.firebasestorage.app",
+    messagingSenderId: "458333895387",
+    appId: "1:458333895387:web:127e1cedb8ce30b39e6afe"
+  };
+  
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth();
+  
+  // Get the user profile area element
+  const area = document.getElementById('userProfileArea');
+  
+  // Handle authentication state changes
+  onAuthStateChanged(auth, (user) => {
+    console.log('Auth state changed:', user ? 'User logged in' : 'No user');
+    if (!user) {
+      // Redirect to login if not authenticated
+      window.location.href = 'login.html';
+    } else {
+      // Render user profile area with email and logout
+      area.innerHTML = `
+        <div class="profile-info">
+          <span>${user.email}</span>
+          <small><button id="logoutBtn" style="background:none;border:none;color:#4F46E5;cursor:pointer;padding:0;font-size:0.8rem;">Logout</button></small>
+        </div>
+        <div class="profile-avatar">
+          <i class="fas fa-user"></i>
+        </div>
+      `;
+      
+      // Add logout functionality
+      document.getElementById('logoutBtn').addEventListener('click', () => {
+        signOut(auth).then(() => {
+          window.location.href = 'login.html';
+        }).catch((error) => {
+          console.error('Logout error:', error);
+        });
+      });
+    }
+  });
+  </script>
+</body>
+</html>

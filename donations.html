@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donor List - NGOConnect</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-hands-helping"></i>
+                <span>NGOConnect</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Dashboard</a></li>
+                <li><a href="donations.html" class="nav-link">Donations</a></li>
+                <li><a href="volunteers.html" class="nav-link">Volunteer Management</a></li>
+                <li><a href="report.html" class="nav-link">Reports</a></li>
+            </ul>
+            <span id="userProfileArea">
+                <a href="login.html" style="text-decoration:none;">
+                    <button class="btn-primary" style="padding:0.5rem 1.5rem;border-radius:6px;border:2px solid #4F46E5;background:#4F46E5;color:#fff;font-weight:600;cursor:pointer;transition:all 0.2s;">Get Started</button>
+                </a>
+            </span>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <section class="hero-section" style="padding-bottom: 2rem;">
+            <div class="hero-content">
+                <h1>Add/ Edit</h1>
+                <form id="donorForm" style="display:flex; gap:1rem; align-items:center; margin:2rem 0;">
+                    <input id="donorName" type="text" placeholder="Donar Name.." style="flex:1; padding:1rem 1.5rem; border-radius:2rem; border:none; background:#e5e7eb; font-size:1.1rem; box-shadow:0 2px 6px #bdbdbd; outline:none;">
+                    <button type="button" style="background:#d1d5db; border:none; border-radius:50%; width:2.5rem; height:2.5rem; display:flex; align-items:center; justify-content:center; font-size:1.2rem; cursor:pointer;"><i class="fas fa-filter"></i></button>
+                    <button id="addDonorBtn" type="submit" style="padding:0.8rem 2rem; border-radius:1.5rem; background:#a3aab7; color:#fff; border:none; font-weight:600; font-size:1.1rem; cursor:pointer;">ADD</button>
+                </form>
+                <div id="donorCards" style="display:flex; flex-direction:column; gap:1rem; margin-bottom:2rem;">
+                    <!-- Donor cards will be added here -->
+                </div>
+            </div>
+        </section>
+        <section style="margin-top:2rem;">
+            <h2 style="font-size:2rem; font-weight:700; margin-bottom:1rem;">Donation List</h2>
+            <div style="overflow-x:auto;">
+                <table id="donorTable" style="width:100%; background:#f3f4f6; border-radius:1rem; border-collapse:separate; border-spacing:0;">
+                    <thead>
+                        <tr style="text-align:left;">
+                            <th style="padding:1rem;">Name</th>
+                            <th>Email</th>
+                            <th>Ph no.</th>
+                            <th>Donation Date</th>
+                            <th>Total Amount</th>
+                            <th>Select</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Donor rows will be added here -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>NGOConnect</h4>
+                <p>Empowering NGOs to create positive change through collaboration and efficient management.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Our Projects</a></li>
+                    <li><a href="#">Get Involved</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Documentation</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Support</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Newsletter</h4>
+                <p>Stay updated with our latest news and updates.</p>
+                <div class="newsletter-form">
+                    <input type="email" placeholder="Enter your email">
+                    <button type="submit">Subscribe</button>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 NGOConnect. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Navigation active state
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function() {
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+// Donor List Functionality
+const donorForm = document.getElementById('donorForm');
+const donorNameInput = document.getElementById('donorName');
+const donorCards = document.getElementById('donorCards');
+const donorTable = document.getElementById('donorTable').querySelector('tbody');
+
+function getRandomStatus() {
+    const statuses = ['pending', 'success', 'failed'];
+    return statuses[Math.floor(Math.random() * statuses.length)];
+}
+
+function getStatusDot(status) {
+    if (status === 'success') return '<span style="display:inline-block;width:16px;height:16px;border-radius:50%;background:#22c55e;"></span>';
+    if (status === 'failed') return '<span style="display:inline-block;width:16px;height:16px;border-radius:50%;background:#ef4444;"></span>';
+    return '<span style="display:inline-block;width:16px;height:16px;border-radius:50%;background:#d1d5db;"></span>';
+}
+
+donorForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const name = donorNameInput.value.trim();
+    if (!name) return;
+    // Dummy data for other fields
+    const email = name.toLowerCase().replace(/\s+/g, '') + '@mail.com';
+    const phone = '9' + Math.floor(100000000 + Math.random() * 900000000);
+    const date = new Date().toLocaleDateString();
+    const amount = Math.floor(Math.random() * 10000) + 1000;
+    const status = getRandomStatus();
+
+    // Add card (visual placeholder)
+    const card = document.createElement('div');
+    card.style.background = '#a3aab7';
+    card.style.borderRadius = '1rem';
+    card.style.display = 'flex';
+    card.style.alignItems = 'center';
+    card.style.justifyContent = 'space-between';
+    card.style.padding = '1rem';
+    card.innerHTML = `<span style="color:#fff;font-size:1.1rem;">${name}</span><button style="background:#d1d5db;border:none;border-radius:1rem;padding:0.5rem 1.5rem;">Edit</button>`;
+    donorCards.appendChild(card);
+
+    // Add to table
+    const row = document.createElement('tr');
+    row.innerHTML = `
+        <td style="padding:0.8rem 1rem;">${name}</td>
+        <td>####</td>
+        <td>####</td>
+        <td>${date}</td>
+        <td>${amount}</td>
+        <td><input type="checkbox"></td>
+        <td>${getStatusDot(status)}</td>
+    `;
+    donorTable.appendChild(row);
+
+    donorNameInput.value = '';
+});
+    </script>
+    
+    <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+    
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyAGIY6ZrkTWUhq9sgu3ZHLxhaHRLhoCAfc",
+      authDomain: "ngoconnect-86fb7.firebaseapp.com",
+      projectId: "ngoconnect-86fb7",
+      storageBucket: "ngoconnect-86fb7.firebasestorage.app",
+      messagingSenderId: "458333895387",
+      appId: "1:458333895387:web:127e1cedb8ce30b39e6afe"
+    };
+    
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth();
+    
+    // Get the user profile area element
+    const area = document.getElementById('userProfileArea');
+    
+    // Handle authentication state changes
+    onAuthStateChanged(auth, (user) => {
+      console.log('Auth state changed:', user ? 'User logged in' : 'No user');
+      if (!user) {
+        // Redirect to login if not authenticated
+        window.location.href = 'login.html';
+      } else {
+        // Render user profile area with email and logout
+        area.innerHTML = `
+          <div class="profile-info">
+            <span>${user.email}</span>
+            <small><button id="logoutBtn" style="background:none;border:none;color:#4F46E5;cursor:pointer;padding:0;font-size:0.8rem;">Logout</button></small>
+          </div>
+          <div class="profile-avatar">
+            <i class="fas fa-user"></i>
+          </div>
+        `;
+        
+        // Add logout functionality
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+          signOut(auth).then(() => {
+            window.location.href = 'login.html';
+          }).catch((error) => {
+            console.error('Logout error:', error);
+          });
+        });
+      }
+    });
+    </script>
+</body>
+</html>

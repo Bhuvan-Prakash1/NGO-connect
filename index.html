@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NGOConnect - Empowering NGOs</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-hands-helping"></i>
+                <span>NGOConnect</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Dashboard</a></li>
+                <li><a href="donations.html" class="nav-link">Donations</a></li>
+                <li><a href="volunteers.html" class="nav-link">Volunteer Management</a></li>
+                <li><a href="report.html" class="nav-link">Reports</a></li>
+            </ul>
+            <span id="userProfileArea">
+                <a href="login.html" style="text-decoration:none;">
+                    <button class="btn-primary" style="padding:0.5rem 1.5rem;border-radius:6px;border:2px solid #4F46E5;background:#4F46E5;color:#fff;font-weight:600;cursor:pointer;transition:all 0.2s;">Get Started</button>
+                </a>
+            </span>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <h1>Welcome to NGOConnect</h1>
+                <p>Empowering NGOs to create positive change through collaboration and efficient management</p>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">1,247</span>
+                        <span class="stat-label">Active NGOs</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">$2.5M</span>
+                        <span class="stat-label">Total Donations</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">15,432</span>
+                        <span class="stat-label">Volunteers</span>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="floating-card">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>Real-time Analytics</h3>
+                    <p>Track your impact with live data</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dashboard Grid -->
+        <section class="dashboard-grid">
+            <!-- Quick Actions -->
+            <div class="quick-actions">
+                <h2>Quick Actions</h2>
+                <div class="action-cards">
+                    <div class="action-card">
+                        <div class="action-icon">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                        <h3>New Project</h3>
+                        <p>Create a new project</p>
+                    </div>
+                    <a href="donations.html" style="text-decoration:none;color:inherit;">
+                        <div class="action-card">
+                            <div class="action-icon">
+                                <i class="fas fa-hand-holding-heart"></i>
+                            </div>
+                            <h3>Record Donation</h3>
+                            <p>Add new donation</p>
+                        </div>
+                    </a>
+                    <a href="volunteers.html" style="text-decoration:none;color:inherit;">
+                        <div class="action-card">
+                            <div class="action-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <h3>Add Volunteer</h3>
+                            <p>Register volunteer</p>
+                        </div>
+                    </a>
+                    <a href="report.html" style="text-decoration:none;color:inherit;">
+                        <div class="action-card">
+                            <div class="action-icon">
+                                <i class="fas fa-file-alt"></i>
+                            </div>
+                            <h3>Generate Report</h3>
+                            <p>Create monthly report</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Charts Section -->
+            <div class="charts-section">
+                <div class="chart-container">
+                    <h3>Donation Trends</h3>
+                    <canvas id="lineChart" width="400" height="200"></canvas>
+                </div>
+                <div class="chart-container">
+                    <h3>Project Distribution</h3>
+                    <canvas id="barChart" width="400" height="200"></canvas>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="recent-activity">
+                <h2>Recent Activity</h2>
+                <div class="activity-list">
+                    <div class="activity-item">
+                        <div class="activity-icon">
+                            <i class="fas fa-hand-holding-heart"></i>
+                        </div>
+                        <div class="activity-content">
+                            <h4>New Donation Received</h4>
+                            <p>Anonymous donor contributed $5,000</p>
+                            <span class="activity-time">2 hours ago</span>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="activity-content">
+                            <h4>New Volunteer Joined</h4>
+                            <p>Sarah Johnson registered as volunteer</p>
+                            <span class="activity-time">4 hours ago</span>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon">
+                            <i class="fas fa-project-diagram"></i>
+                        </div>
+                        <div class="activity-content">
+                            <h4>Project Milestone Reached</h4>
+                            <p>Education Initiative reached 75% completion</p>
+                            <span class="activity-time">1 day ago</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Key Metrics -->
+            <div class="metrics-section">
+                <h2>Key Metrics</h2>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-icon">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        <div class="metric-content">
+                            <h3>$125,430</h3>
+                            <p>Total Donations</p>
+                            <span class="metric-change positive">+12.5%</span>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon">
+                            <i class="fas fa-project-diagram"></i>
+                        </div>
+                        <div class="metric-content">
+                            <h3>24</h3>
+                            <p>Active Projects</p>
+                            <span class="metric-change positive">+3</span>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="metric-content">
+                            <h3>156</h3>
+                            <p>Volunteers</p>
+                            <span class="metric-change positive">+8</span>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="metric-content">
+                            <h3>89%</h3>
+                            <p>Success Rate</p>
+                            <span class="metric-change positive">+5.2%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>NGOConnect</h4>
+                <p>Empowering NGOs to create positive change through collaboration and efficient management.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Our Projects</a></li>
+                    <li><a href="#">Get Involved</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Documentation</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Support</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Newsletter</h4>
+                <p>Stay updated with our latest news and updates.</p>
+                <div class="newsletter-form">
+                    <input type="email" placeholder="Enter your email">
+                    <button type="submit">Subscribe</button>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 NGOConnect. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Line Chart
+        const lineCtx = document.getElementById('lineChart').getContext('2d');
+        new Chart(lineCtx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                datasets: [{
+                    label: 'Donations',
+                    data: [15000, 25000, 18000, 32000, 28000, 45000],
+                    borderColor: '#4F46E5',
+                    backgroundColor: 'rgba(79, 70, 229, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.1)'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+
+        // Bar Chart
+        const barCtx = document.getElementById('barChart').getContext('2d');
+        new Chart(barCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Education', 'Healthcare', 'Environment', 'Poverty', 'Human Rights'],
+                datasets: [{
+                    label: 'Projects',
+                    data: [8, 6, 4, 3, 3],
+                    backgroundColor: [
+                        '#4F46E5',
+                        '#10B981',
+                        '#F59E0B',
+                        '#EF4444',
+                        '#8B5CF6'
+                    ],
+                    borderRadius: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.1)'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+
+        // Navigation active state
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function() {
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Action cards hover effect
+        document.querySelectorAll('.action-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px)';
+            });
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
+    <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+    
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyAGIY6ZrkTWUhq9sgu3ZHLxhaHRLhoCAfc",
+      authDomain: "ngoconnect-86fb7.firebaseapp.com",
+      projectId: "ngoconnect-86fb7",
+      storageBucket: "ngoconnect-86fb7.firebasestorage.app",
+      messagingSenderId: "458333895387",
+      appId: "1:458333895387:web:127e1cedb8ce30b39e6afe"
+    };
+    
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth();
+    
+    // Get the user profile area element
+    const area = document.getElementById('userProfileArea');
+    
+    // Handle authentication state changes
+    onAuthStateChanged(auth, (user) => {
+      console.log('Auth state changed:', user ? 'User logged in' : 'No user');
+      if (!user) {
+        // Show Get Started button when not authenticated
+        area.innerHTML = `<a href='login.html' style='text-decoration:none;'><button class='btn-primary' style='padding:0.5rem 1.5rem;border-radius:6px;border:2px solid #4F46E5;background:#4F46E5;color:#fff;font-weight:600;cursor:pointer;transition:all 0.2s;'>Get Started</button></a>`;
+      } else {
+        // Render user profile area with email and logout
+        area.innerHTML = `
+  <div class="nav-profile">
+    <div class="profile-info">
+      <span>${user.email}</span>
+    </div>
+    <div class="profile-avatar">
+      <i class="fas fa-user"></i>
+    </div>
+    <button id="logoutBtn" class="btn-primary" style="background:#fff;color:#4F46E5;border:1.5px solid #4F46E5;margin-left:0.7rem;">Logout</button>
+  </div>
+`;
+        
+        // Add logout functionality
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+          signOut(auth).then(() => {
+            window.location.href = 'login.html';
+          }).catch((error) => {
+            console.error('Logout error:', error);
+          });
+        });
+      }
+    });
+</script>
+<!-- Remove the non-module Firebase scripts -->
+</body>
+</html>
